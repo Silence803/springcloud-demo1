@@ -1,0 +1,26 @@
+server:
+  port: 8771
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8765/eureka/
+#service-url:
+#  hello-service: http://localhost:8767
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+#      routes:
+#        - id: hello-service-id
+#          uri: lb://hello-service/hi
+#          predicates:
+#            - Path=/hi/**
+
+  application:
+    name: gateway-service
