@@ -16,11 +16,21 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-#      routes:
-#        - id: hello-service-id
-#          uri: lb://hello-service/hi
-#          predicates:
-#            - Path=/hi/**
+      routes:
+        - id: hello-service-id
+          uri: lb://hello-service/hi
+          predicates:
+            - Path=/hi/**
+          filters:
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 1
+              redis-rate-limiter.burstCapacity: 20
+              key-resolver: "#{@ipKeyResolver}"
 
   application:
     name: gateway-service
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
